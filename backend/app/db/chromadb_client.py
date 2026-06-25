@@ -8,8 +8,8 @@ import logging
 from app.config import get_settings
 
 try:
-    import chromadb
-    from chromadb.config import Settings as ChromaSettings
+    import chromadb  # type: ignore
+    from chromadb.config import Settings as ChromaSettings  # type: ignore
     CHROMA_AVAILABLE = True
 except ImportError:
     chromadb = None
