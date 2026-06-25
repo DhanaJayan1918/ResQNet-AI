@@ -1,0 +1,50 @@
+# ===========================================
+# ResQNet AI - Python Dependencies
+# ===========================================
+
+# Web Framework
+fastapi==0.115.9
+uvicorn[standard]==0.34.3
+python-multipart==0.0.20
+
+# Database
+motor==3.7.1
+pymongo==4.12.1
+redis[hiredis]==5.3.0
+
+# Vector Store
+# chromadb==1.0.5
+
+# Authentication
+python-jose[cryptography]==3.4.0
+passlib[bcrypt]==1.7.4
+pydantic[email]==2.11.4
+pydantic-settings==2.9.1
+
+# AI / ML
+google-genai==1.16.1
+sentence-transformers==4.1.0
+spacy==3.8.7
+scikit-learn==1.7.0
+pandas==2.3.0
+numpy==2.3.0
+
+# Optimization
+ortools==9.12.4544
+networkx==3.5
+geopy==2.4.1
+
+# PDF Generation
+reportlab==4.4.0
+markdown==3.8.2
+
+# Utilities
+python-dotenv==1.1.1
+httpx==0.28.1
+Pillow==11.2.1
+aiofiles==24.1.0
+
+# Testing
+pytest==8.4.1
+pytest-asyncio==1.0.0
+httpx==0.28.1

@@ -1,0 +1,95 @@
+# ===========================================
+# ResQNet AI - Docker Compose
+# Full stack: MongoDB, Redis, ChromaDB, Backend, Frontend
+# ===========================================
+
+services:
+  # MongoDB - Primary database
+  mongodb:
+    image: mongo:7
+    container_name: resqnet-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./docker/mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    environment:
+      MONGO_INITDB_DATABASE: resqnet
+    networks:
+      - resqnet-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis - Caching, pub/sub, rate limiting
+  redis:
+    image: redis:7-alpine
+    container_name: resqnet-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - resqnet-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend - FastAPI application
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: resqnet-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+      - chromadb_data:/app/data/chromadb
+    env_file:
+      - ./backend/.env
+    environment:
+      MONGODB_URL: mongodb://mongodb:27017
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - resqnet-network
+
+  # Frontend - React application (dev mode)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: resqnet-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - resqnet-network
+
+volumes:
+  mongodb_data:
+  redis_data:
+  backend_uploads:
+  chromadb_data:
+
+networks:
+  resqnet-network:
+    driver: bridge

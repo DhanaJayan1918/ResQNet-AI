@@ -1,0 +1,314 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ===================================================
+   ResQNet AI — Design System
+   Emergency Response Command Center
+   =================================================== */
+
+
+/* ---- CSS Custom Properties (Design Tokens) ---- */
+:root {
+  /* Brand Colors */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-light: #60a5fa;
+  --color-primary-dark: #1d4ed8;
+
+  /* Accent Colors */
+  --color-accent: #06b6d4;
+  --color-accent-hover: #0891b2;
+
+  /* Severity Palette */
+  --color-critical: #ef4444;
+  --color-critical-bg: rgba(239, 68, 68, 0.12);
+  --color-high: #f97316;
+  --color-high-bg: rgba(249, 115, 22, 0.12);
+  --color-moderate: #eab308;
+  --color-moderate-bg: rgba(234, 179, 8, 0.12);
+  --color-low: #22c55e;
+  --color-low-bg: rgba(34, 197, 94, 0.12);
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Dark Theme (Default) */
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-card: #1a1f2e;
+  --bg-card-hover: #1f2537;
+  --bg-elevated: #252b3b;
+  --bg-input: #1e2433;
+  --bg-sidebar: #0d1117;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0f172a;
+
+  --border-primary: #1e293b;
+  --border-secondary: #334155;
+  --border-focus: #3b82f6;
+
+  /* Glass Effect */
+  --glass-bg: rgba(17, 24, 39, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+  --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.3);
+  --shadow-glow-red: 0 0 20px rgba(239, 68, 68, 0.3);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Sidebar */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 70px;
+  --header-height: 64px;
+}
+
+/* ---- Global Styles ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ---- Links ---- */
+a {
+  color: var(--color-primary-light);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+/* ---- Buttons ---- */
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* ---- Inputs ---- */
+input, textarea, select {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  outline: none;
+}
+
+/* ---- Utility Classes ---- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-secondary);
+  box-shadow: var(--shadow-md);
+}
+
+.card-elevated {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---- Priority Badge Styles ---- */
+.priority-critical {
+  background: var(--color-critical-bg);
+  color: var(--color-critical);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.priority-high {
+  background: var(--color-high-bg);
+  color: var(--color-high);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.priority-moderate {
+  background: var(--color-moderate-bg);
+  color: var(--color-moderate);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+}
+
+.priority-low {
+  background: var(--color-low-bg);
+  color: var(--color-low);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* ---- Animations ---- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.6); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slide-right {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.animate-slide-left {
+  animation: slideInLeft 0.3s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ---- Status Indicator ---- */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot-active {
+  background: var(--color-success);
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+}
+
+.status-dot-warning {
+  background: var(--color-warning);
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+}
+
+.status-dot-critical {
+  background: var(--color-critical);
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ---- Leaflet Map Overrides ---- */
+.leaflet-container {
+  background: var(--bg-secondary) !important;
+  border-radius: var(--radius-lg);
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--bg-card) !important;
+}
+
+.leaflet-control-zoom a {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-primary) !important;
+}
+
+.leaflet-control-attribution {
+  background: var(--bg-secondary) !important;
+  color: var(--text-muted) !important;
+  font-size: 0.625rem !important;
+}
